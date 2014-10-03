@@ -68,7 +68,7 @@ ifeq ($(USE_LINUX),yes)
 	sh $(shell pwd)/check_dependencies.sh static RELEASE_BUILD=$(RELEASE_BUILD) $(MAKECMDGOALS)
 else
 ifeq ($(USE_ANDROID),yes)
-    sh $(shell pwd)/check_dependencies.sh android_no_neon RELEASE_BUILD=$(RELEASE_BUILD) $(MAKECMDGOALS)
+	sh $(shell pwd)/check_dependencies.sh android_no_neon RELEASE_BUILD=$(RELEASE_BUILD) $(MAKECMDGOALS)
 endif
 endif
 endif

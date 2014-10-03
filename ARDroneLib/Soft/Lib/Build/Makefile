@@ -117,10 +117,10 @@ ifneq ($(CONTROL_DLL),yes)
          $(ARDRONE_TOOL_DIR)/Navdata/ardrone_navdata_client.c
 
 
-       ifeq ($(USE_IPHONE),no)
-         GENERIC_LIBRARY_SOURCE_FILES+=				  \
-           $(ARDRONE_TOOL_DIR)/Com/config_serial.c
-       endif
+       #ifeq ($(USE_IPHONE),no)
+       #  GENERIC_LIBRARY_SOURCE_FILES+=				  \
+       #    $(ARDRONE_TOOL_DIR)/Com/config_serial.c
+       #endif
 
        ifeq ($(USE_ARDRONE_VICON),yes)
          GENERIC_CFLAGS+=-DUSE_ARDRONE_VICON

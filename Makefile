@@ -1,7 +1,9 @@
 SDK_PATH:=$(shell pwd)/ARDroneLib
 PC_TARGET=yes
-USE_LINUX=yes
+USE_ANDROID=yes
 
+export NDK_PATH=$(ANDROID_NDK)
+export ANDROID_NDK_PATH=$(ANDROID_NDK)
 
 ifdef MYKONOS
    include $(ARDRONE_CUSTOM_CONFIG)
@@ -16,10 +18,10 @@ $(SDK_TARGET_DIR)
 SDK_FLAGS+="USE_APP=no"
 SDK_FLAGS+="USE_LIB=yes"
 
-all: 
-	@$(MAKE) -C $(SDK_PATH)/Soft/Build $(TMP_SDK_FLAGS) $(SDK_FLAGS) $(MAKECMDGOALS) USE_LINUX=yes
-	@$(MAKE) -C $(SDK_PATH)/VP_SDK/Build $(TMP_SDK_FLAGS) $(SDK_FLAGS) $(MAKECMDGOALS) USE_LINUX=yes
-              
+all:
+	@$(MAKE) -C $(SDK_PATH)/Soft/Build $(TMP_SDK_FLAGS) $(SDK_FLAGS) $(MAKECMDGOALS) USE_ANDROID=yes
+	@$(MAKE) -C $(SDK_PATH)/VP_SDK/Build $(TMP_SDK_FLAGS) $(SDK_FLAGS) $(MAKECMDGOALS) USE_ANDROID=yes
+
 install:
 	mkdir -p ${INSTALL_PREFIX}
 	find $(SDK_PATH)/Soft/Build -type f -name '*.a' -exec cp '{}' ${INSTALL_PREFIX} \;

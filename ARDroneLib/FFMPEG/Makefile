@@ -42,6 +42,16 @@ endif
 	$(SILENT_MAKE)tar xzf parrot_ffmpeg_build_utils.tar.gz
 	# Extra pacth to remove deprecated warnings
 	$(SILENT_MAKE)sed -i "s/check_cflags -Wall/check_cflags -Wall\ncheck_cflags -Wno-deprecated-declarations/g" ffmpeg/configure
+	# Extra pacth to remove deprecated warnings
+	$(SILENT_MAKE)sed -i "s/check_cflags -Wall/check_cflags -Wall\ncheck_cflags -Wno-deprecated-declarations/g" ffmpeg/configure
+	# Extra patch to cross-compile static on Android x86_64
+	$(SILENT_MAKE)sed -i "s/linux-x86/linux-x86_64/g" ffmpeg/autoConf.bash
+	$(SILENT_MAKE)sed -i "s/build_shared_architecture armv7/build_static_architecture armv7/g" ffmpeg/autoConf.bash
+	$(SILENT_MAKE)sed -i "s/make_shared_binary_from armv7/make_static_binary_from armv7/g" ffmpeg/autoConf.bash
+	$(SILENT_MAKE)sed -i "s/\t\tbuild_shared_architecture armv6 \" --arch=armv6 --cpu=arm1136j-s --disable-pic --disable-neon --enable-armvfp\"//g" ffmpeg/autoConf.bash
+	$(SILENT_MAKE)sed -i "s/\t\tmake_shared_binary_from armv6//g" ffmpeg/autoConf.bash
+	$(SILENT_MAKE)sed -i "s/FFMPEG_SHARED/FFMPEG_STATIC/g" ffmpeg/autoConf.bash
+	$(SILENT_MAKE)sed -i 's/{cross_prefix}$${pkg_config_default}/{pkg_config_default}/g' ffmpeg/configure
 	$(SILENT_MAKE)echo "Done"
 endif
 endif
