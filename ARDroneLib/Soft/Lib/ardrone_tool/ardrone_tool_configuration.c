@@ -8,6 +8,14 @@
 #include <config.h>
 #include <ardrone_tool/ardrone_tool.h>
 
+#include <android/log.h>
+void blog3(const char *msg, ...) {
+    va_list args;
+    va_start(args, msg);
+    __android_log_vprint(ANDROID_LOG_INFO, "ARDRONE_SDK_TOOL", msg, args);
+    va_end(args);
+}
+
 #define ARDRONE_TOOL_CONFIGURATION_MAX_EVENT	128
 
 #undef ARDRONE_CONFIG_KEY_IMM
@@ -53,26 +61,41 @@ void ardrone_tool_reset_configuration (void)
 #define ARDRONE_CONFIG_KEY_IMM(KEY, NAME, INI_TYPE, C_TYPE, C_TYPE_PTR, RW, DEFAULT, CALLBACK)											\
 bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool_configuration_callback result_callback)				\
 {																																		\
+    blog3("1\n"); \
 	bool_t res = FALSE;                                                                                                                 \
+    blog3("2\n"); \
     vp_os_mutex_lock(&ardrone_tool_configuration_mutex);																				\
+    blog3("3\n"); \
     if(ardrone_tool_configuration_current_index == (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT)	\
     {                                                                                                                                   \
+    blog3("4\n"); \
         printf("ARDRONE_TOOL_CONFIGURATION QUEUE FILLED !! %s\n", #NAME);																\
     }																																	\
     else																																\
     {																																	\
+    blog3("5\n"); \
         ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].control_mode = ACK_CONTROL_MODE;							\
+    blog3("6\n"); \
         ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].result_callback = result_callback;							\
+    blog3("7\n"); \
         ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].key = #NAME;												\
+    blog3("8\n"); \
         ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = vp_os_malloc(sizeof(C_TYPE));						\
+    blog3("9\n"); \
         vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, sizeof(C_TYPE));				\
+    blog3("10\n"); \
         ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
+    blog3("11\n"); \
         ardrone_tool_configuration_nb_event = (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT;			\
+    blog3("12\n"); \
         if(ardrone_tool_configuration_nb_event == ((ardrone_tool_configuration_current_index + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT))	\
             ardrone_tool_configuration_event_configure();																				\
+    blog3("13\n"); \
         res = TRUE;																														\
     }																																	\
+    blog3("14\n"); \
     vp_os_mutex_unlock(&ardrone_tool_configuration_mutex);																				\
+    blog3("15\n"); \
 	return res;																															\
 }
 
@@ -80,29 +103,45 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
 #define ARDRONE_CONFIG_KEY_STR(KEY, NAME, INI_TYPE, C_TYPE, C_TYPE_PTR, RW, DEFAULT, CALLBACK)												\
 bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool_configuration_callback result_callback)					\
 {																																			\
+    blog3("16\n"); \
 	bool_t res = FALSE;                                                                                                                     \
+    blog3("17\n"); \
 	if(value != NULL)                                                                                                                       \
 	{																																		\
+    blog3("18\n"); \
 		vp_os_mutex_lock(&ardrone_tool_configuration_mutex);																				\
+    blog3("19\n"); \
 		if(ardrone_tool_configuration_current_index == (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT)	\
 		{																																	\
+    blog3("20\n"); \
 			printf("ARDRONE_TOOL_CONFIGURATION QUEUE FILLED !! %s\n", #NAME);																\
 		}																																	\
 		else																																\
         {																																	\
+    blog3("21\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].control_mode = ACK_CONTROL_MODE;							\
+    blog3("22\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].result_callback = result_callback;							\
+    blog3("23\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].key = #NAME;												\
+    blog3("24\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = vp_os_malloc((strlen((char*)value) + 1) * sizeof(C_TYPE));				\
+    blog3("25\n"); \
 			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
+    blog3("26\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
+    blog3("27\n"); \
 			ardrone_tool_configuration_nb_event = (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT;			\
+    blog3("28\n"); \
 			if(ardrone_tool_configuration_nb_event == ((ardrone_tool_configuration_current_index + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT))	\
 				ardrone_tool_configuration_event_configure();																			 	\
+    blog3("29\n"); \
 			res = TRUE;																														\
 		}																																	\
+    blog3("30\n"); \
 		vp_os_mutex_unlock(&ardrone_tool_configuration_mutex);																				\
 	}																																		\
+    blog3("31\n"); \
 	return res;																																\
 }
 
