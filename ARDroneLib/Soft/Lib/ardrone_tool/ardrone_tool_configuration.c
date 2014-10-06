@@ -131,7 +131,7 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
     blog3(".value = %s\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
     blog3(" event = %d\n", ardrone_tool_configuration_nb_event); \
     blog3(" value = %s\n", value); \
-    blog3(" size = %s\n", (strlen((char*)value) + 1) * sizeof(C_TYPE)); \
+    blog3(" size = %i\n", (strlen((char*)value) + 1) * sizeof(C_TYPE)); \
 			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
     }else{ \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = "10000,0,492767188,-1229157891,1000,100,100,525000,0,0";				\
