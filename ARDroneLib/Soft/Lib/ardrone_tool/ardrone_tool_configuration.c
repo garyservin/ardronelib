@@ -127,19 +127,27 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
     blog3("24\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = vp_os_malloc((strlen((char*)value) + 1) * sizeof(C_TYPE));				\
     blog3("25\n"); \
-			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
+    blog3(".value = %s\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
     blog3("26\n"); \
-			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
+    blog3(" event = %d\n", ardrone_tool_configuration_nb_event); \
     blog3("27\n"); \
-			ardrone_tool_configuration_nb_event = (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT;			\
+    blog3(" value = %s\n", value); \
     blog3("28\n"); \
+			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
+    blog3("29\n"); \
+			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
+    blog3("30\n"); \
+			ardrone_tool_configuration_nb_event = (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT;			\
+    blog3("31\n"); \
 			if(ardrone_tool_configuration_nb_event == ((ardrone_tool_configuration_current_index + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT))	\
 				ardrone_tool_configuration_event_configure();																			 	\
-    blog3("29\n"); \
+    blog3("32\n"); \
 			res = TRUE;																														\
+    blog3("33\n"); \
 		}																																	\
-    blog3("30\n"); \
+    blog3("34\n"); \
 		vp_os_mutex_unlock(&ardrone_tool_configuration_mutex);																				\
+    blog3("35\n"); \
 	}																																		\
     blog3("31\n"); \
 	return res;																																\
