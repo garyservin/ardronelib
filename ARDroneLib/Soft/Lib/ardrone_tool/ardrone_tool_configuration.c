@@ -125,31 +125,33 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
     blog3("23\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].key = #NAME;												\
     blog3("24\n"); \
+    blog3("key = %s\n", #NAME); \
+    if (ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].key != "flying_camera_mode"){\
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = vp_os_malloc((strlen((char*)value) + 1) * sizeof(C_TYPE));				\
-    blog3("25\n"); \
     blog3(".value = %s\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
-    blog3("26\n"); \
     blog3(" event = %d\n", ardrone_tool_configuration_nb_event); \
-    blog3("27\n"); \
     blog3(" value = %s\n", value); \
-    blog3("28\n"); \
+    blog3(" size = %s\n", (strlen((char*)value) + 1) * sizeof(C_TYPE)); \
 			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
-    blog3("29\n"); \
+    }else{ \
+			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = "10000,0,492767188,-1229157891,1000,100,100,525000,0,0";				\
+    }\
+    blog3("25\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
-    blog3("30\n"); \
+    blog3("26\n"); \
 			ardrone_tool_configuration_nb_event = (ardrone_tool_configuration_nb_event + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT;			\
-    blog3("31\n"); \
+    blog3("27\n"); \
 			if(ardrone_tool_configuration_nb_event == ((ardrone_tool_configuration_current_index + 1) % ARDRONE_TOOL_CONFIGURATION_MAX_EVENT))	\
 				ardrone_tool_configuration_event_configure();																			 	\
-    blog3("32\n"); \
+    blog3("28\n"); \
 			res = TRUE;																														\
-    blog3("33\n"); \
+    blog3("29\n"); \
 		}																																	\
-    blog3("34\n"); \
+    blog3("30\n"); \
 		vp_os_mutex_unlock(&ardrone_tool_configuration_mutex);																				\
-    blog3("35\n"); \
-	}																																		\
     blog3("31\n"); \
+	}																																		\
+    blog3("32\n"); \
 	return res;																																\
 }
 
