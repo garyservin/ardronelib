@@ -140,7 +140,8 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
     blog3("size of value = %d\n", sizeof(value)); \
     blog3("size of array value = %d\n", sizeof(value)/sizeof(value[0])); \
     blog3("size of dest value = %d\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
-			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
+    blog3("testing assigning directly \n"); \
+	ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = value;		\
     }\
     blog3("25\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
