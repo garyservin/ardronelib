@@ -124,17 +124,23 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].result_callback = result_callback;							\
     blog3("23\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].key = #NAME;												\
-    blog3("24\n"); \
+    blog3("24 - test again without debug\n"); \
     blog3("key = %s\n", #NAME); \
     if (ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].key != "flying_camera_mode"){\
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = vp_os_malloc((strlen((char*)value) + 1) * sizeof(C_TYPE));				\
-    blog3(".value = %s\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
     blog3(" event = %d\n", ardrone_tool_configuration_nb_event); \
     blog3(" value = %s\n", value); \
-    blog3(" size = %i\n", (strlen((char*)value) + 1) * sizeof(C_TYPE)); \
 			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
     }else{ \
-			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = "10000,0,492767188,-1229157891,1000,100,100,525000,0,0";				\
+			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = vp_os_malloc((strlen((char*)value) + 1) * sizeof(C_TYPE));				\
+    blog3(" sizeof(C_TYPE) = %d\n", sizeof(C_TYPE)); \
+    blog3(" strlen((char*)value) + 1 = %d\n", strlen((char*)value) + 1); \
+    blog3(" size = %d\n", ((strlen((char*)value) + 1) * sizeof(C_TYPE))); \
+    blog3(" value = %s\n", value); \
+    blog3("size of value = %d\n", sizeof(value)); \
+    blog3("size of array value = %d\n", sizeof(value)/sizeof(value[0])); \
+    blog3("size of dest value = %d\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
+			vp_os_memcpy(ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value, value, (strlen((char*)value) + 1) * sizeof(C_TYPE));		\
     }\
     blog3("25\n"); \
 			ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].callback	= (ardrone_at_configuration_set)&ARDRONE_CONFIGURATION_SET_FUNCTION(NAME);	\
