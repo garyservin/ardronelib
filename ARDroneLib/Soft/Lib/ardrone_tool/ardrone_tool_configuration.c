@@ -139,8 +139,8 @@ bool_t ardrone_tool_configuration_addevent_##NAME(C_TYPE_PTR value, ardrone_tool
     blog3(" value = %s\n", value); \
     blog3("size of value = %d\n", sizeof(value)); \
     blog3("size of array value = %d\n", sizeof(value)/sizeof(value[0])); \
-    blog3("size of dest value = %d\n", ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value); \
-    blog3("testing assigning directly \n"); \
+    blog3("size of dest value = %d\n", sizeof(*ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value)); \
+    blog3("fix size of dest \n"); \
 	ardrone_tool_configuration_data[ardrone_tool_configuration_nb_event].value = value;		\
     }\
     blog3("25\n"); \
